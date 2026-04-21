@@ -10,7 +10,7 @@ function getTask(id) {
   return tasks.find(t => t.id === num);
 }
 
-function addTask(task) {
+function addTask(task = {}) {
   const newTask = {
     id: nextId++,
     title: task.title || 'Untitled Task',
