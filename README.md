@@ -60,3 +60,21 @@ Se quiser, eu posso:
 - Gerar um template para issues e PRs.
 # techflow-tasks
 Sistema de gerenciamento de tarefas ágil
+
+## Mudança de Escopo
+
+Durante o desenvolvimento do projeto, foi identificada a necessidade de incluir um sistema de priorização de tarefas.
+
+### Justificativa
+A startup de logística lida com diferentes níveis de urgência em suas operações. Algumas tarefas precisam ser executadas imediatamente, enquanto outras podem ser realizadas posteriormente. 
+
+Sem um sistema de prioridade, a equipe pode acabar focando em tarefas menos importantes, prejudicando o desempenho geral.
+
+### Alterações realizadas
+- Inclusão do campo "prioridade" nas tarefas (baixa, média e alta)
+- Atualização das rotas da API para suportar o novo campo
+- Ajustes na estrutura de dados
+- Criação de novas tarefas no Kanban relacionadas à funcionalidade
+
+### Impacto no projeto
+A mudança melhorou a organização do fluxo de trabalho, permitindo que tarefas críticas sejam tratadas com mais atenção.
