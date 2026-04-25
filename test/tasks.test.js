@@ -18,6 +18,19 @@ describe('Tasks API', () => {
     expect(res.statusCode).toBe(201);
     expect(res.body).toHaveProperty('id');
     expect(res.body.title).toBe('Test Task');
+    expect(res.body).toHaveProperty('prioridade');
+    expect(res.body.prioridade).toBe('média');
+  });
+
+  test('POST /tasks accepts prioridade value', async () => {
+    const res = await request(app).post('/tasks').send({ title: 'P1', prioridade: 'alta' });
+    expect(res.statusCode).toBe(201);
+    expect(res.body.prioridade).toBe('alta');
+  });
+
+  test('POST /tasks rejects invalid prioridade', async () => {
+    const res = await request(app).post('/tasks').send({ title: 'P2', prioridade: 'urgent' });
+    expect(res.statusCode).toBe(400);
   });
 
   test('GET /tasks/:id returns created task', async () => {
@@ -34,6 +47,14 @@ describe('Tasks API', () => {
     const res = await request(app).put(`/tasks/${id}`).send({ title: 'Updated' });
     expect(res.statusCode).toBe(200);
     expect(res.body.title).toBe('Updated');
+  });
+
+  test('PUT /tasks/:id updates prioridade', async () => {
+    const post = await request(app).post('/tasks').send({ title: 'ToUpdatePrioridade' });
+    const id = post.body.id;
+    const res = await request(app).put(`/tasks/${id}`).send({ prioridade: 'baixa' });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.prioridade).toBe('baixa');
   });
 
   test('DELETE /tasks/:id removes task', async () => {

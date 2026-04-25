@@ -23,7 +23,17 @@ router.post('/tasks', (req, res) => {
   if (!req.body.title) {
     return res.status(400).json({ error: 'Campo "title" é obrigatório' });
   }
-  const newTask = tasks.addTask(req.body);
+  const payload = { ...req.body };
+  if (payload.priority && payload.prioridade === undefined) {
+    payload.prioridade = payload.priority;
+    delete payload.priority;
+  }
+  if (payload.prioridade !== undefined) {
+    const normalized = tasks.normalizePrioridade(payload.prioridade);
+    if (!normalized) return res.status(400).json({ error: 'Campo "prioridade" inválido. Valores permitidos: baixa, média, alta' });
+    payload.prioridade = normalized;
+  }
+  const newTask = tasks.addTask(payload);
   res.status(201).json(newTask);
 });
 
@@ -31,7 +41,17 @@ router.put('/tasks/:id', (req, res) => {
   if (!req.body || typeof req.body !== 'object') {
     return res.status(400).json({ error: 'Corpo da requisição inválido' });
   }
-  const updated = tasks.updateTask(req.params.id, req.body);
+  const payload = { ...req.body };
+  if (payload.priority && payload.prioridade === undefined) {
+    payload.prioridade = payload.priority;
+    delete payload.priority;
+  }
+  if (payload.prioridade !== undefined) {
+    const normalized = tasks.normalizePrioridade(payload.prioridade);
+    if (!normalized) return res.status(400).json({ error: 'Campo "prioridade" inválido. Valores permitidos: baixa, média, alta' });
+    payload.prioridade = normalized;
+  }
+  const updated = tasks.updateTask(req.params.id, payload);
   if (!updated) return res.status(404).json({ error: 'Tarefa não encontrada' });
   res.json(updated);
 });
