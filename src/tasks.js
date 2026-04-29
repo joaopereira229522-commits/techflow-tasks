@@ -79,4 +79,11 @@ function clearTasks() {
   nextId = 1;
 }
 
+// Seed some example tasks when running locally (skip during tests)
+if (process.env.NODE_ENV !== 'test') {
+  addTask({ title: 'Comprar leite', description: 'Ir ao mercado', prioridade: 'média' });
+  addTask({ title: 'Corrigir bug crítico', prioridade: 'alta' });
+  addTask({ title: 'Ler e-mails', prioridade: 'baixa' });
+}
+
 module.exports = { getTasks, getTask, addTask, updateTask, deleteTask, clearTasks, normalizePrioridade };
